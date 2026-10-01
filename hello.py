@@ -64,20 +64,22 @@ def chat_page():
 def chat():
     message = request.json['message']
 
-    if "my name is" in message.lower():
+    if "hello" in message.lower():
+        response = "Hello!"
+    elif "my name is" in message.lower():
         # get the name from the message
         name = message[message.lower().index("my name is") + len("my name is"):].strip()
 
         session['chat_name'] = name
 
-        response = "Hello! Nice to meet you, " + name + "!"
+        response = "Nice to meet you, " + name + "!"
     
     elif "what is my name" in message.lower():
         if 'chat_name' in session:
             response = "Your name is " + session.get('chat_name') + "."
         else:
             response = "I don't know your name yet."
-            
+
     elif "my email is" in message.lower():
         # get the email from the message
         email = message[message.lower().index("my email is") + len("my email is"):].strip()
@@ -88,6 +90,13 @@ def chat():
             response = "Thanks for sharing your email! I will remember it as " + email + "."
         else:
             response = "Thanks for sharing your email, " + session.get('chat_name') + "! I will remember it as " + email + "."
+    
+    elif "what is my email" in message.lower():
+        if 'chat_email' in session:
+            response = "Your email is " + session.get('chat_email') + "."
+        else:
+            response = "I don't know your email yet."
+    
     else:
         response = "I'm sorry, I didn't understand that."
 
