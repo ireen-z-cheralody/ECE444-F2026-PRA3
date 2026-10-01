@@ -10,6 +10,7 @@ from wtforms.validators import DataRequired
 
 class NameForm(FlaskForm):
     name = StringField('What is your name?', validators=[DataRequired()])
+    email = StringField('What is your UofT Email address?', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 # create the application instance
@@ -26,9 +27,10 @@ def index():
         if old_name is not None and old_name != form.name.data:
             flash('Looks like you have changed your name!')
         session['name'] = form.name.data
+        session['email'] = form.email.data
         return redirect(url_for('index'))
     return render_template('index.html',
-        form = form, name = session.get('name'))
+        form = form, name = session.get('name'), email = session.get('email'))
 
 @app.route('/user/<name>')
 def user(name):
@@ -42,3 +44,9 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
+
+# clear session data when the user goes to the /clear route
+@app.route('/clear')
+def clear():
+    session.clear()
+    return redirect(url_for('index'))
