@@ -9,3 +9,7 @@ This repo is a clone of https://github.com/miguelgrinberg/flasky.
 ![alt text](image-1.png)
 
 ![alt text](image-2.png)
+
+## Activity 1.4 Webpage
+
+![alt text](image-3.png)
